@@ -1,0 +1,18 @@
+
+Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]
+Fetching 2 files: 100%|██████████| 2/2 [00:00<00:00, 996.98it/s]
+cycle of 80 steps (2.5 patches), 64 series. Unpatched 5M, dip recovered by future patch:
+             0     2     4     6     8     10    12    14    16    18    20    22    24    26    28    30
+recovered  0.98  0.94  0.84  0.61  0.56  0.43 -0.24 -0.32 -0.32 -0.29 -0.26 -0.26 -0.24 -0.21 -0.25 -0.25
+
+=== A. State of far tokens (patches 20-31) entering layer L replaced by the near token's (patches 0-11)
+                                far dips recovered  near dips recovered  error / noise sd, far steps
+entering layer 0                            -0.237                0.696                        1.797
+entering layer 1                            -0.204                0.696                        1.741
+entering layer 2                            -0.172                0.696                        1.677
+entering layer 3                            -0.167                0.696                        1.664
+entering layer 4                             0.168                0.696                        1.418
+entering layer 5                             0.267                0.696                        1.332
+entering layer 6                             0.700                0.696                        0.966
+entering layer 7                             0.704                0.696                        0.963
+after the last layer (ceiling)               0.711                0.696                        0.960

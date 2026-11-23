@@ -1,0 +1,18 @@
+{"time": "23:56:03", "label": "baseline | cycle 80", "passes": 2}
+{"time": "23:56:05", "label": "baseline | cycle 180", "passes": 2}
+{"time": "23:56:28", "label": "capture baseline | cycle 80", "passes": 1}
+{"time": "23:56:29", "label": "capture baseline | cycle 180", "passes": 1}
+{"time": "23:59:44", "label": "L5h1 retarget lag 43 | cycle 80", "passes": 2}
+{"time": "23:59:48", "label": "L5h1 retarget lag 43 | cycle 180", "passes": 2}
+{"time": "00:00:34", "label": "L5h1 retarget lag 11 | cycle 80", "passes": 2}
+{"time": "00:00:38", "label": "L5h1 retarget lag 11 | cycle 180", "passes": 2}
+{"time": "00:00:41", "label": "L5h1 retarget lag 32 | cycle 80", "passes": 2}
+{"time": "00:00:45", "label": "L5h1 retarget lag 32 | cycle 180", "passes": 2}
+{"time": "00:00:49", "label": "L5h1 retarget lag 64 | cycle 80", "passes": 2}
+{"time": "00:00:52", "label": "L5h1 retarget lag 64 | cycle 180", "passes": 2}
+{"time": "00:02:39", "label": "L5h1 design 43:1.5,11:0.5 | cycle 80", "passes": 2}
+{"time": "00:02:43", "label": "L5h1 design 43:1.5,11:0.5 | cycle 180", "passes": 2}
+{"time": "00:03:00", "label": "capture dual43 | cycle 80", "passes": 1}
+{"time": "00:03:02", "label": "capture dual43 | cycle 180", "passes": 1}
+{"time": "00:03:25", "label": "final checkpoint reloaded (L5h1 dual 43:1.5, 11:0.5) | cycle 80", "passes": 2}
+{"time": "00:03:29", "label": "final checkpoint reloaded (L5h1 dual 43:1.5, 11:0.5) | cycle 180", "passes": 2}

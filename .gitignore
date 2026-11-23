@@ -1,0 +1,6 @@
+checkpoints/
+data/
+external/
+.venv/
+__pycache__/
+*.pyc

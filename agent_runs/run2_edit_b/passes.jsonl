@@ -1,0 +1,33 @@
+{"time": "03:53:39", "label": "capture base | cycle 80", "passes": 1}
+{"time": "03:53:42", "label": "capture base | cycle 180", "passes": 1}
+{"time": "03:56:43", "label": "shift none | cycle 80", "passes": 2}
+{"time": "03:56:45", "label": "shift none | cycle 180", "passes": 2}
+{"time": "03:56:46", "label": "shift 5.1:-16 | cycle 80", "passes": 2}
+{"time": "03:56:47", "label": "shift 5.1:-16 | cycle 180", "passes": 2}
+{"time": "03:56:48", "label": "shift 5.1:-21 | cycle 80", "passes": 2}
+{"time": "03:56:49", "label": "shift 5.1:-21 | cycle 180", "passes": 2}
+{"time": "04:00:11", "label": "diag shift none [block:5.1] | cycle 80", "passes": 1}
+{"time": "04:00:11", "label": "diag shift none [zero:5.1:11] | cycle 80", "passes": 1}
+{"time": "04:00:12", "label": "diag shift none [block:3.1,block:4.0,block:4.1,block:5.0,block:5.1] | cycle 80", "passes": 1}
+{"time": "04:00:13", "label": "diag shift none [block:5.1] | cycle 180", "passes": 1}
+{"time": "04:00:13", "label": "diag shift none [zero:5.1:11] | cycle 180", "passes": 1}
+{"time": "04:00:14", "label": "diag shift none [block:3.1,block:4.0,block:4.1,block:5.0,block:5.1] | cycle 180", "passes": 1}
+{"time": "04:00:44", "label": "capture s51m16 | cycle 80", "passes": 1}
+{"time": "04:03:54", "label": "diag shift none [force:5.1:11] | cycle 80", "passes": 1}
+{"time": "04:03:55", "label": "diag shift none [force:5.1:32] | cycle 80", "passes": 1}
+{"time": "04:03:55", "label": "diag shift none [force:5.1:11] | cycle 180", "passes": 1}
+{"time": "04:03:56", "label": "diag shift none [force:5.1:32] | cycle 180", "passes": 1}
+{"time": "08:08:49", "label": "gain b | cycle 80", "passes": 2}
+{"time": "08:08:51", "label": "gain b | cycle 180", "passes": 2}
+{"time": "08:09:25", "label": "capture gb | cycle 180", "passes": 1}
+{"time": "08:12:09", "label": "gain e | cycle 80", "passes": 2}
+{"time": "08:12:10", "label": "gain e | cycle 180", "passes": 2}
+{"time": "08:14:35", "label": "gain h | cycle 80", "passes": 2}
+{"time": "08:14:36", "label": "gain h | cycle 180", "passes": 2}
+{"time": "08:20:59", "label": "gain k2 | cycle 80", "passes": 2}
+{"time": "08:21:00", "label": "gain k2 | cycle 180", "passes": 2}
+{"time": "08:21:02", "label": "gain i | cycle 80", "passes": 2}
+{"time": "08:21:03", "label": "gain i | cycle 180", "passes": 2}
+{"time": "08:21:54", "label": "capture gh | cycle 80", "passes": 1}
+{"time": "08:22:25", "label": "final checkpoint reloaded from disk | cycle 80", "passes": 2}
+{"time": "08:22:27", "label": "final checkpoint reloaded from disk | cycle 180", "passes": 2}
