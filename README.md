@@ -1,4 +1,18 @@
-# Repairing Timestral-5M by editing 6,144 weights by hand
+<p align="center">
+  <img src="assets/banner.svg" width="100%" alt="One attention head was looking in the wrong place. We moved it. Illustration: a series with a repeating dip; the published model's forecast loses the dip about 512 steps ahead, the edited model keeps it.">
+</p>
+
+<h1 align="center">Repairing Timestral-5M by editing 6,144 weights by hand</h1>
+
+<p align="center">
+  <a href="#symptom"><b>01</b> Symptom</a> &nbsp;·&nbsp;
+  <a href="#diagnosis"><b>02</b> Diagnosis</a> &nbsp;·&nbsp;
+  <a href="#repair"><b>03</b> Repair</a> &nbsp;·&nbsp;
+  <a href="#tests"><b>04</b> Tests</a> &nbsp;·&nbsp;
+  <a href="#fine-print"><b>05</b> Fine print</a> &nbsp;·&nbsp;
+  <a href="#limits">Limits</a> &nbsp;·&nbsp;
+  <a href="#how-to-run">Run it</a>
+</p>
 
 Timestral-5M, a small time-series forecasting model by Mistral, forgets repeating patterns
 once it forecasts more than about 500 steps ahead. We traced the failure to **one attention
@@ -8,30 +22,33 @@ no gradients**, only reasoning about what the weights do. The edit changes 6,144
 cyclic data (by 22-54 % on real ocean tides from four gauges), and leaves a 97-task public
 benchmark unchanged.
 
+<p align="center">
+  <img src="assets/key_numbers.svg" width="100%" alt="Key numbers: 6,144 weights changed (0.12 % of the model); 0 gradients; 82 % of each distant dip drawn (published model: none); 22-54 % less distant error on real ocean tides; benchmark error ratio 0.999 on 97 real tasks (unchanged).">
+</p>
+
 ![The failure and the fix on one series](figures/02_failure_example.png)
 
-### How we measure
-
-Two measures are used throughout:
-
-- **Dip score: how much of a repeating dip the forecast draws.** For each dip in the true
-  future, we compare the forecast's level inside the dip with its level just before and after,
-  and divide by the true depth of the dip.
-  - **1** (or 100 %): the full dip is drawn, at the right place.
-  - **0**: no dip at all, a flat line.
-  - **Negative**: the forecast draws the opposite where the dip should be (a bump, or a dip
-    shifted to the wrong place).
-
-  We average it over every dip that starts **512 or more steps ahead** ("distant dips") or
-  less than 384 steps ahead ("near dips").
-- **Error ratio: the edited model's error divided by the published model's,** on the same
-  forecasts.
-  - **1.00**: same error.
-  - **0.90**: 10 % less error.
-  - **1.10**: 10 % more.
-
-  The error is MASE, the standard benchmark measure: forecast error relative to a simple
-  "repeat the last cycle" forecast. Over many tasks we average the ratios (geometric mean).
+> [!NOTE]
+> **How we measure.** Two measures are used throughout:
+>
+> - **Dip score: how much of a repeating dip the forecast draws.** For each dip in the true
+>   future, we compare the forecast's level inside the dip with its level just before and after,
+>   and divide by the true depth of the dip.
+>   - **1** (or 100 %): the full dip is drawn, at the right place.
+>   - **0**: no dip at all, a flat line.
+>   - **Negative**: the forecast draws the opposite where the dip should be (a bump, or a dip
+>     shifted to the wrong place).
+>
+>   We average it over every dip that starts **512 or more steps ahead** ("distant dips") or
+>   less than 384 steps ahead ("near dips").
+> - **Error ratio: the edited model's error divided by the published model's,** on the same
+>   forecasts.
+>   - **1.00**: same error.
+>   - **0.90**: 10 % less error.
+>   - **1.10**: 10 % more.
+>
+>   The error is MASE, the standard benchmark measure: forecast error relative to a simple
+>   "repeat the last cycle" forecast. Over many tasks we average the ratios (geometric mean).
 
 ### Results at a glance
 
@@ -44,11 +61,12 @@ Two measures are used throughout:
 | Error on GIFT-Eval, 97 real forecasting tasks | reference | **unchanged** (ratio 0.999) |
 | Weights changed | — | 6,144 of 5,208,960 (0.12 %) |
 
----
+<a id="symptom"></a>
+<p align="center">
+  <img src="assets/chapter_01_symptom.svg" width="100%" alt="Chapter 01, Symptom: the forecast forgets the cycle about 500 steps ahead.">
+</p>
 
-## Key findings
-
-### 1. Timestral-5M loses repeating patterns about 500 steps ahead; larger models don't
+### Timestral-5M loses repeating patterns about 500 steps ahead; larger models don't
 
 Give the model a series with a dip every 180 steps and ask for 1,024 steps. We score each
 future dip by the share of its depth the forecast draws (1 = the full dip, 0 = none). The 5M
@@ -63,7 +81,12 @@ from patch 12 on. It also shows on real data: on GIFT-Eval's `bizitobs_service` 
 metrics every 10 seconds, one-hour cycle), 5M was 24 % worse than 28M, and the gap sat
 480-576 steps into the forecast, where the second dip of the cycle falls.
 
-### 2. The cause is one attention head that always looks 11 patches back
+<a id="diagnosis"></a>
+<p align="center">
+  <img src="assets/chapter_02_diagnosis.svg" width="100%" alt="Chapter 02, Diagnosis: one head always reads 11 patches back, into empty future.">
+</p>
+
+### The cause is one attention head that always looks 11 patches back
 
 The model forecasts in **blocks of 32 future patches**. Head 5.1 (layer 5, head 1) ignores
 content and always reads the token exactly **11 patches back**. The heads after it (6.1, 6.2,
@@ -79,7 +102,12 @@ other head; swapping internal states shows the information is lost in layer 5; a
 the head to read 32 back brings the far dips back (68 % and 91 % of each dip drawn, instead of
 none).
 
-### 3. Editing that one head by hand repairs the failure
+<a id="repair"></a>
+<p align="center">
+  <img src="assets/chapter_03_repair.svg" width="100%" alt="Chapter 03, Repair: 6,144 weights rewritten; the head now reads 32 back, into real history.">
+</p>
+
+### Editing that one head by hand repairs the failure
 
 An agent (Claude Code running Claude Fable 5.2), allowed only to read the weights and change them by reasoning (no
 gradients, no training, 200 counted model runs on two diagnostic series), rewrote the query
@@ -89,7 +117,16 @@ the head's query, **6,144 weights**. On fresh series it never saw, the edited mo
 82 % of each distant dip, against none before (top figure). We call this change **the head
 edit** (the files name it `edit_b`).
 
-### 4. It matches or beats fine-tuning, without the collateral damage
+> [!IMPORTANT]
+> **No gradients, no training.** The agent changed 6,144 weights (0.12 % of the model) by
+> reasoning about what they do.
+
+<a id="tests"></a>
+<p align="center">
+  <img src="assets/chapter_04_tests.svg" width="100%" alt="Chapter 04, Tests: against fine-tuning, a 97-task benchmark and real tides.">
+</p>
+
+### It matches or beats fine-tuning, without the collateral damage
 
 We compared the hand edit with two gradient-based fixes trained on series that show the
 failure: a **full fine-tune** (all 5.2 million weights) and a **fine-tune of only the same
@@ -114,29 +151,34 @@ ratios).
 - So **knowing where to edit is what avoids the damage**, and the agent's hand-chosen values
   got the most out of that location.
 
-> **How the fine-tunes were trained.** Both use the same recipe; only the set of trainable
-> weights differs.
->
-> - **Data:** synthetic series made fresh at every step, from the same family as the failure
->   (a level with noise and one dip repeating every *c* steps). Each batch holds 32 series:
->   8 cycle lengths *c* drawn from 40 to 400 steps, 4 series each. The comparison above is
->   scored on new series none of the models saw; two of its seven cycle lengths (64 and 70)
->   were never trained on, the other five (100, 150, 160, 220, 300) were in the training range.
-> - **Task:** 8,192 steps of history, a 1,024-step forecast in one pass, run through the
->   model's own forecasting code, so training sees exactly what inference does.
-> - **Loss:** the quantile (pinball) loss over the model's 21 quantiles and the whole horizon.
-> - **Settings:** AdamW, 600 steps, gradient clipping at 1.0, no weight decay.
->   - **Full fine-tune:** every weight is trained, learning rate 1e-4.
->   - **Restricted fine-tune:** only the 6,144 weights the head edit changed are trained (32 rows of
->     the query of head 5.1); every other weight is frozen, and the script checks afterwards
->     that nothing else moved. Three learning rates were tried (1e-4, 1e-3, 1e-2). The rule,
->     fixed before training, picked the best distant-dip score among those that keep near
->     dips within 0.05 of the published model: 1e-3.
->
-> Scripts: `experiments/edit_5m/baseline_finetune.py` (mode `anycycle`) and
-> `finetune_same_weights.py`.
+<details>
+<summary><b>How the fine-tunes were trained</b></summary>
 
-### 5. On real data the gain sits exactly where the failure lives: far ahead
+Both use the same recipe; only the set of trainable
+weights differs.
+
+- **Data:** synthetic series made fresh at every step, from the same family as the failure
+  (a level with noise and one dip repeating every *c* steps). Each batch holds 32 series:
+  8 cycle lengths *c* drawn from 40 to 400 steps, 4 series each. The comparison above is
+  scored on new series none of the models saw; two of its seven cycle lengths (64 and 70)
+  were never trained on, the other five (100, 150, 160, 220, 300) were in the training range.
+- **Task:** 8,192 steps of history, a 1,024-step forecast in one pass, run through the
+  model's own forecasting code, so training sees exactly what inference does.
+- **Loss:** the quantile (pinball) loss over the model's 21 quantiles and the whole horizon.
+- **Settings:** AdamW, 600 steps, gradient clipping at 1.0, no weight decay.
+  - **Full fine-tune:** every weight is trained, learning rate 1e-4.
+  - **Restricted fine-tune:** only the 6,144 weights the head edit changed are trained (32 rows of
+    the query of head 5.1); every other weight is frozen, and the script checks afterwards
+    that nothing else moved. Three learning rates were tried (1e-4, 1e-3, 1e-2). The rule,
+    fixed before training, picked the best distant-dip score among those that keep near
+    dips within 0.05 of the published model: 1e-3.
+
+Scripts: `experiments/edit_5m/baseline_finetune.py` (mode `anycycle`) and
+`finetune_same_weights.py`.
+
+</details>
+
+### On real data the gain sits exactly where the failure lives: far ahead
 
 [GIFT-Eval](https://github.com/SalesforceAIResearch/gift-eval) is a public benchmark of 97
 real forecasting tasks (electricity, solar, traffic, weather, server monitoring, sales,
@@ -172,7 +214,7 @@ of the 10-second server tasks, by distance ahead (no window picked):
 On these noisy server series, the edit helps where the next cycle's dip falls far ahead: real
 but local, with a small cost earlier in the forecast.
 
-### 6. On real ocean tides, outside the benchmark, the failure and the fix are as clear as on synthetic data
+### On real ocean tides, outside the benchmark, the failure and the fix are as clear as on synthetic data
 
 To test the edit on data that was not part of any benchmark we had used, we took a series with
 the failure's ingredients: a regular repeating pattern whose period is not a whole number of
@@ -215,7 +257,7 @@ gap-free stretch.
 - **Where it is absent** (solar radiation, taxi), the head edit is harmless: the two forecasts overlap.
   These series are regular too, but the published model already extrapolates them well.
 - **The cost is consistent on tides:** the near part of the forecast (first ≈ 1.5 days) is 20-40 %
-  worse. It is the same trade-off as on the server data and in finding 9.
+  worse. It is the same trade-off as on the server data and in [the short-history cost](#the-cost-short-histories).
 
 ![Typical forecasts on the other series](figures/17_external_examples.png)
 
@@ -239,7 +281,12 @@ Errors in units of the series' spread; lower is better.
 - **Near ahead, 28M stays clearly better** on every gauge, and the head edit's near-part cost widens
   that gap.
 
-### 7. Only 32 works, and synthetic tests can't tell
+<a id="fine-print"></a>
+<p align="center">
+  <img src="assets/chapter_05_fine_print.svg" width="100%" alt="Chapter 05, Fine print: why 32, who finds the head, what it costs, and bigger models.">
+</p>
+
+### Only 32 works, and synthetic tests can't tell
 
 We built the same edit for 12 distances, from 11 to 43 patches. On synthetic series almost
 every distance from 28 to 43 repairs the dips equally well. On seven real hourly and daily
@@ -253,28 +300,31 @@ still the only safe one), but 32 is the block size the model was **trained** wit
 damage of other distances comes **through the future tokens**, not through how the history is
 re-read.
 
-### 8. An agent finds the faulty head with no hints
+### An agent finds the faulty head with no hints
 
 A fresh agent (Claude Code running Claude Opus 5.5) given only the symptom (no layer, no head, no hint) found the same head and the
 same explanation in **32 model runs, about 10 minutes**, by recording which positions each
 head reads and checking which ones follow the cycle. Its report:
 [`agent_runs/run5_found_head_without_hints/REPORT.md`](agent_runs/run5_found_head_without_hints/REPORT.md).
 
-### 9. The cost: short histories
+### The cost: short histories
 
-The edited head needs 32 patches (1,024 steps) of history to reach. With about 1,000-1,500
-steps of history, near-term patterns get worse than with the published model. Every fix we
-tried shares this cost; the full fine-tune pays the most.
+> [!WARNING]
+> The edited head needs 32 patches (1,024 steps) of history to reach. With about 1,000-1,500
+> steps of history, near-term patterns get worse than with the published model. Every fix we
+> tried shares this cost; the full fine-tune pays the most.
 
 ![Short-history cost](figures/13_short_history_cost.png)
 
-### 10. The failure shrinks with model size
+### The failure shrinks with model size
 
 With 8,192 steps of history, the published models draw
 1 % (5M), 34 % (28M), 80 % (123M) and 96 % (209M) of each distant dip; the head edit brings 5M to
 82 %. This study repairs the 5M model only.
 
 ![Model sizes](figures/14_model_sizes.png)
+
+---
 
 ---
 
@@ -290,7 +340,7 @@ With 8,192 steps of history, the published models draw
   differ by 60 % on real data. Any weight edit, by hand or by agent, needs an unseen real
   benchmark before it can be trusted.
 - **Editing repairs; it does not add.** The 5M model already had the pattern-copying heads; the
-  edit only reconnects them. Larger models have the failure much less (finding 10), so there
+  edit only reconnects them. Larger models have the failure much less ([model sizes](#the-failure-shrinks-with-model-size)), so there
   is less to repair there.
 
 ## How we found the head
@@ -343,7 +393,7 @@ distance is set by the phase of its query at each of 16 rotation frequencies. Th
 frequency pairs in the query of head 5.1, tensor `transformer.layers.5.attns.0.wQKV.weight`,
 so the head's score peaks at 32 patches back for future tokens while tokens with 11-31 patches
 of history keep reading 11 back. The design is traced step by step in its
-[journal](agent_runs/run2_edit_b/journal.md). The hint-free agent of finding 8 ran on Claude
+[journal](agent_runs/run2_edit_b/journal.md). The agent of [the hint-free run](#an-agent-finds-the-faulty-head-with-no-hints) ran on Claude
 Opus 5.5; its own final edit used a different distance, and the edit reported here is the
 head edit from the Fable 5.2 run.
 
@@ -355,7 +405,7 @@ head edit from the Fable 5.2 run.
 
 - One model family and one failure.
 - The fine-tuning comparison uses our own training recipe; Mistral's is not published.
-- Near-term forecasts get worse when the history is short (finding 9).
+- Near-term forecasts get worse when the history is short ([the short-history cost](#the-cost-short-histories)).
 - Why 33 already hurts long hourly series is not explained.
 - Forecasting in smaller blocks (an existing setting, no weight change) cuts the error of the
   central forecast a little more (1 % less on the benchmark, against none for the head edit) but makes
@@ -399,20 +449,21 @@ fc = TimestralForecaster.from_pretrained("checkpoints/edit_b")
 
 | Result | Script | Stored output |
 | --- | --- | --- |
-| Lead-time limit (finding 1) | `experiments/gap_10s/check3_synthetic_lead_time.py` | `results/gap_10s/check3_synthetic.csv` |
+| Lead-time limit (chapter 01) | `experiments/gap_10s/check3_synthetic_lead_time.py` | `results/gap_10s/check3_synthetic.csv` |
 | Head distances | `experiments/edit_5m/check_28m_fixed_lag.py` via `experiments/scale/failure_by_size.py` | `results/scale/lag_heads_by_size.csv` |
 | Cycle lock | `experiments/gap_10s/check5_attention_lock.py` | `results/gap_10s/check5_attention_lock.csv` |
 | Switching off, swapping | `experiments/gap_10s/check6_cause_and_uncertainty.py`, `check7_where_it_breaks.py` | `results/gap_10s/check6.log`, `check7_patching_cycle80.csv` |
-| Head edit vs fine-tunes (finding 4) | `experiments/edit_5m/heldback_finetune_vs_b.py`, `heldback_sameweights.py`, `baseline_finetune.py`, `finetune_same_weights.py` | `results/edit_5m/finetune_vs_b/`, `sameweights_vs_b/` |
-| Benchmark (finding 5) | `evaluation/gift_eval_run.py --checkpoint … --compare-with Timestral-5M` | `results/gift_eval/*/against_published.csv` |
+| Head edit vs fine-tunes (chapter 04) | `experiments/edit_5m/heldback_finetune_vs_b.py`, `heldback_sameweights.py`, `baseline_finetune.py`, `finetune_same_weights.py` | `results/edit_5m/finetune_vs_b/`, `sameweights_vs_b/` |
+| Benchmark (chapter 04) | `evaluation/gift_eval_run.py --checkpoint … --compare-with Timestral-5M` | `results/gift_eval/*/against_published.csv` |
 | Example forecast (top figure); best-case real window; real-data error by distance | `analysis/make_examples.py` | `results/examples.npz` |
-| Near vs distant on real data (finding 5) | `analysis/far_horizon_real.py` | `results/far_horizon_real.csv` |
-| Tides, solar radiation, taxi demand, outside the benchmark, with published 28M and 123M (finding 6) | `analysis/external_real.py` (downloads the public data) | `results/external_real.npz`, `results/external_real_summary.csv` |
-| Distance sweep (finding 7) | `experiments/edit_5m/lag_sweep.py`, `tools/lag_sweep.ps1`, `analysis/lag_sweep_summary.py` | `results/lag_sweep_gift.csv`, `results/edit_5m/lag_sweep_synthetic.csv` |
+| Near vs distant on real data (chapter 04) | `analysis/far_horizon_real.py` | `results/far_horizon_real.csv` |
+| Tides, solar radiation, taxi demand, outside the benchmark, with published 28M and 123M (chapter 04) | `analysis/external_real.py` (downloads the public data) | `results/external_real.npz`, `results/external_real_summary.csv` |
+| Distance sweep (chapter 05) | `experiments/edit_5m/lag_sweep.py`, `tools/lag_sweep.ps1`, `analysis/lag_sweep_summary.py` | `results/lag_sweep_gift.csv`, `results/edit_5m/lag_sweep_synthetic.csv` |
 | Block size, history vs future | `experiments/edit_5m/block_size_test.py`, `split_history_future.py` | `results/block_size_test.csv`, `results/edit_5m/split_history_future.csv` |
-| Short-history cost (finding 9) | the held-back scripts above | `results/edit_5m/*/history_length.csv` |
-| Model sizes (finding 10) | `experiments/scale/failure_by_size.py` | `results/scale/failure_by_size.csv` |
+| Short-history cost (chapter 05) | the held-back scripts above | `results/edit_5m/*/history_length.csv` |
+| Model sizes (chapter 05) | `experiments/scale/failure_by_size.py` | `results/scale/failure_by_size.csv` |
 | All figures | `make_figures.py` (no model runs) | `figures/` |
+| README illustrations (banner, key numbers, chapter strips) | `tools/make_readme_art.py` (drawing only, no data) | `assets/` |
 
 The scripts ran on one laptop GPU (8 GB). `results/` holds their outputs, and
 `make_figures.py` redraws every figure from them.
@@ -426,6 +477,7 @@ evaluation/      GIFT-Eval runner
 analysis/        analyses of stored results
 results/         stored outputs
 figures/         README figures
+assets/          README illustrations
 ```
 
 ## Acknowledgements

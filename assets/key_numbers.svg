@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 150" width="1200" height="150" role="img" aria-label="Key numbers: 6,144 weights changed (0.12 % of the model); 0 gradients (edited by reasoning); 82 % of each distant dip drawn (published model: none); 22–54 % less distant error (on real ocean tides); 0.999 benchmark error ratio (97 real tasks: unchanged)">
+<style>
+  .sans { font-family: Inter, 'Segoe UI', Helvetica, Arial, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', SFMono-Regular, Consolas, 'Liberation Mono', monospace; }
+  .draw { stroke-dasharray: 3000; animation: draw 3.2s ease-out 0.4s both; }
+  .fade { animation: fade 0.8s ease-out 2.8s both; }
+  @keyframes draw { from { stroke-dashoffset: 3000; } to { stroke-dashoffset: 0; } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .draw, .fade { animation: none; } }
+</style>
+<rect x="0.0" y="0" width="230.4" height="150" rx="14" fill="#0f1216"/>
+<rect x="0.0" y="0" width="5" height="150" rx="2" fill="#eb6834"/>
+<text x="24.0" y="62" class="mono" font-size="38" font-weight="700" fill="#f2f1ec">6,144</text>
+<text x="24.0" y="96" class="sans" font-size="15" fill="#b9b7b0">weights changed</text>
+<text x="24.0" y="120" class="sans" font-size="13" fill="#7d7b75">0.12 % of the model</text>
+<rect x="242.4" y="0" width="230.4" height="150" rx="14" fill="#0f1216"/>
+<rect x="242.4" y="0" width="5" height="150" rx="2" fill="#1baf7a"/>
+<text x="266.4" y="62" class="mono" font-size="38" font-weight="700" fill="#f2f1ec">0</text>
+<text x="266.4" y="96" class="sans" font-size="15" fill="#b9b7b0">gradients</text>
+<text x="266.4" y="120" class="sans" font-size="13" fill="#7d7b75">edited by reasoning</text>
+<rect x="484.8" y="0" width="230.4" height="150" rx="14" fill="#0f1216"/>
+<rect x="484.8" y="0" width="5" height="150" rx="2" fill="#eb6834"/>
+<text x="508.8" y="62" class="mono" font-size="38" font-weight="700" fill="#f2f1ec">82 %</text>
+<text x="508.8" y="96" class="sans" font-size="15" fill="#b9b7b0">of each distant dip drawn</text>
+<text x="508.8" y="120" class="sans" font-size="13" fill="#7d7b75">published model: none</text>
+<rect x="727.2" y="0" width="230.4" height="150" rx="14" fill="#0f1216"/>
+<rect x="727.2" y="0" width="5" height="150" rx="2" fill="#eb6834"/>
+<text x="751.2" y="62" class="mono" font-size="38" font-weight="700" fill="#f2f1ec">22–54 %</text>
+<text x="751.2" y="96" class="sans" font-size="15" fill="#b9b7b0">less distant error</text>
+<text x="751.2" y="120" class="sans" font-size="13" fill="#7d7b75">on real ocean tides</text>
+<rect x="969.6" y="0" width="230.4" height="150" rx="14" fill="#0f1216"/>
+<rect x="969.6" y="0" width="5" height="150" rx="2" fill="#eb6834"/>
+<text x="993.6" y="62" class="mono" font-size="38" font-weight="700" fill="#f2f1ec">0.999</text>
+<text x="993.6" y="96" class="sans" font-size="15" fill="#b9b7b0">benchmark error ratio</text>
+<text x="993.6" y="120" class="sans" font-size="13" fill="#7d7b75">97 real tasks: unchanged</text>
+</svg>

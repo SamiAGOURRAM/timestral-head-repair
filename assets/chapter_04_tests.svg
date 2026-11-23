@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" width="1200" height="120" role="img" aria-label="Chapter 04: Tests. Against fine-tuning, a 97-task benchmark and real tides.">
+<style>
+  .sans { font-family: Inter, 'Segoe UI', Helvetica, Arial, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', SFMono-Regular, Consolas, 'Liberation Mono', monospace; }
+  .draw { stroke-dasharray: 3000; animation: draw 3.2s ease-out 0.4s both; }
+  .fade { animation: fade 0.8s ease-out 2.8s both; }
+  @keyframes draw { from { stroke-dashoffset: 3000; } to { stroke-dashoffset: 0; } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .draw, .fade { animation: none; } }
+</style>
+<rect width="1200" height="120" rx="16" fill="#0f1216"/>
+<text x="36" y="78" class="mono" font-size="52" font-weight="700" fill="#1baf7a">04</text>
+<line x1="124" y1="30" x2="124" y2="90" stroke="#262b33" stroke-width="2"/>
+<text x="148" y="56" class="mono" font-size="15" letter-spacing="4" fill="#1baf7a">TESTS</text>
+<text x="148" y="86" class="sans" font-size="20" fill="#f2f1ec">Against fine-tuning, a 97-task benchmark and real tides.</text>
+<circle cx="790" cy="58" r="16" fill="none" stroke="#1baf7a" stroke-width="2.4"/>
+<path d="M783,58 l5,6 l10,-12" fill="none" stroke="#1baf7a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="790" y="98" text-anchor="middle" class="sans" font-size="13" fill="#b9b7b0">fine-tunes</text>
+<circle cx="920" cy="58" r="16" fill="none" stroke="#1baf7a" stroke-width="2.4"/>
+<path d="M913,58 l5,6 l10,-12" fill="none" stroke="#1baf7a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="920" y="98" text-anchor="middle" class="sans" font-size="13" fill="#b9b7b0">real benchmark</text>
+<circle cx="1050" cy="58" r="16" fill="none" stroke="#1baf7a" stroke-width="2.4"/>
+<path d="M1043,58 l5,6 l10,-12" fill="none" stroke="#1baf7a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1050" y="98" text-anchor="middle" class="sans" font-size="13" fill="#b9b7b0">ocean tides</text>
+</svg>

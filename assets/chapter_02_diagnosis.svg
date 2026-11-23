@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" width="1200" height="120" role="img" aria-label="Chapter 02: Diagnosis. One head always reads 11 patches back, into empty future.">
+<style>
+  .sans { font-family: Inter, 'Segoe UI', Helvetica, Arial, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', SFMono-Regular, Consolas, 'Liberation Mono', monospace; }
+  .draw { stroke-dasharray: 3000; animation: draw 3.2s ease-out 0.4s both; }
+  .fade { animation: fade 0.8s ease-out 2.8s both; }
+  @keyframes draw { from { stroke-dashoffset: 3000; } to { stroke-dashoffset: 0; } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .draw, .fade { animation: none; } }
+</style>
+<rect width="1200" height="120" rx="16" fill="#0f1216"/>
+<text x="36" y="78" class="mono" font-size="52" font-weight="700" fill="#e5484d">02</text>
+<line x1="124" y1="30" x2="124" y2="90" stroke="#262b33" stroke-width="2"/>
+<text x="148" y="56" class="mono" font-size="15" letter-spacing="4" fill="#e5484d">DIAGNOSIS</text>
+<text x="148" y="86" class="sans" font-size="20" fill="#f2f1ec">One head always reads 11 patches back, into empty future.</text>
+<rect x="776.0" y="82" width="8" height="8" rx="2" fill="#b9b7b0" opacity="0.75"/>
+<rect x="786.6" y="82" width="8" height="8" rx="2" fill="#b9b7b0" opacity="0.75"/>
+<rect x="797.2" y="82" width="8" height="8" rx="2" fill="#b9b7b0" opacity="0.75"/>
+<rect x="807.8" y="82" width="8" height="8" rx="2" fill="#b9b7b0" opacity="0.75"/>
+<rect x="818.4" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="829.0" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="839.6" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="850.2" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="860.8" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="871.4" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="882.0" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="892.6" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="903.2" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="913.8" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="924.4" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="935.0" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="945.6" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="956.2" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="966.8" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="977.4" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="988.0" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="998.6" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1009.2" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1019.8" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1030.4" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1041.0" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1051.6" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1062.2" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1072.8" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1083.4" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1094.0" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1104.6" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1115.2" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1125.8" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1136.4" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<rect x="1147.0" y="82" width="8" height="8" rx="2" fill="none" stroke="#7d7b75" stroke-width="1.2"/>
+<path d="M1151.0,80 Q1092.7,30 1034.4,80" fill="none" stroke="#e5484d" stroke-width="2.4" stroke-dasharray="4 4"/><circle cx="1034.4" cy="80" r="4.5" fill="#e5484d"/>
+<text x="1034.4" y="108" text-anchor="middle" class="mono" font-size="12" fill="#e5484d">11 back: empty</text>
+</svg>
